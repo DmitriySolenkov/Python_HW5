@@ -1,13 +1,35 @@
 import random
 
+
+def twoNicknames():
+    players.append(input('Первый игрок, представьтесь, пожалуйста:'))
+    players.append(input('Второй игрок, представьтесь, пожалуйста:'))
+
+
+def oneNickname():
+    name = input('Игрок, представьтесь, пожалуйста:')
+    players.append(name)
+
+
+def step():
+    firstStep = random.randint(1, 2)
+    match firstStep:
+        case 1: count = 0
+        case 2: count = 1
+    print(f'{players[count]} ходит первым!')
+    return count
+
+
 def modeCheck():
-    mode= int(input(
-    'Выберите режим игры:\n 1-игра друг против друга\n 2-игра против легкого бота\n 3-игра против сложного бота\n:'))
-    if 1<=mode<=3:
+    mode = int(input(
+        'Выберите режим игры:\n 1-игра друг против друга\n 2-игра против легкого бота\n 3-игра против сложного бота\n:'))
+    if 1 <= mode <= 3:
         return mode
     else:
         print('Неправильно указан режим!')
-        return int(modeCheck)
+        mode = int(modeCheck())
+        return mode
+
 
 def playerHand(count):
     hand = int(input(
@@ -35,13 +57,12 @@ def takeTo28(amount):
     if amount < 29:
         return amount
     else:
-        for i in range(1, 29):
+        for i in range(1, 28):
             if (amount-i) % 28 == 1:
                 return i
 
 
-def PvP():
-    count = 1
+def PvP(count):
     amount = 221
     while amount > 0:
         print(f'В корзине осталось {amount} конфет.')
@@ -53,14 +74,13 @@ def PvP():
 
 
 def easyBot():
-    count = 1
     amount = 221
     while amount > 0:
         print(f'В корзине осталось {amount} конфет.')
-        hand = int(playerHand(count))
+        hand = int(playerHand(0))
         amount -= hand
         if amount <= 0:
-            return (f'{players[count%2]} победил!')
+            return (f'{players[0]} победил!')
         print(f'В корзине осталось {amount} конфет.')
         botHand = random.randint(1, 29)
         print(f'Легкий бот берет {botHand} конфет.')
@@ -70,14 +90,13 @@ def easyBot():
 
 
 def hardBot():
-    count = 1
     amount = 221
     while amount > 0:
         print(f'В корзине осталось {amount} конфет.')
-        hand = int(playerHand(count))
+        hand = int(playerHand(0))
         amount -= hand
         if amount <= 0:
-            return (f'{players[count%2]} победил!')
+            return (f'{players[0]} победил!')
         print(f'В корзине осталось {amount} конфет.')
         if amount == 1:
             botHand = amount
@@ -92,13 +111,19 @@ def hardBot():
             return ('Сложный бот победил!')
 
 
-players = ('Игрок №2', 'Игрок №1')
+players = []
 
-gamemode = modeCheck
-print(gamemode)
+gamemode = int(modeCheck())
+
+match gamemode:
+    case 1: twoNicknames()
+    case 2: oneNickname()
+    case 3: oneNickname()
+
 if gamemode == 1:
-    print(PvP())
-if gamemode == 2:
-    print(easyBot())
-if gamemode == 3:
-    print(hardBot())
+    count = step()
+
+match gamemode:
+    case 1: print(PvP(count))
+    case 2: print(easyBot())
+    case 3: print(hardBot())
