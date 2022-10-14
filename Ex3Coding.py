@@ -25,11 +25,11 @@ def charZip(charArray, countArray, index):
     return string
 
 
-f = open('text.txt', 'w')
-f.write('AAAAABBBBCDEEEEEEEEFFFFFGGGGGHHHHHHIK')
+f = open('coding.txt', 'w')
+f.write('AAAAABBBBCDEEEEEEEEFFFFFGGGGGHHHHHHIKKKKKPPPPPPPOOOQ')
 f.close
 
-f = open('text.txt', 'r')
+f = open('coding.txt', 'r')
 line = str(f.read())
 f.close
 lineArray = split(line)
@@ -43,8 +43,6 @@ for i in lineArray:
         charArray.append(i)
         countArray.append(count)
 
-print(charArray)
-print(countArray)
 zipArray = []
 
 for i in range(len(charArray)):
@@ -52,6 +50,6 @@ for i in range(len(charArray)):
 
 zipString = ''.join(zipArray)
 print(zipString)
-f = open('zip.txt', 'w')
+f = open('coded.txt', 'w')
 f.write(zipString)
 f.close
